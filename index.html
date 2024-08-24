@@ -11,7 +11,6 @@
             height: 100%;
             margin: 0;
             background-color: #f0f0f0;
-            /* Light grey background */
         }
 
         .container {
@@ -24,11 +23,9 @@
 
         .box-container {
             background-color: #fff;
-            /* White background */
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            /* Slight shadow for the container */
         }
 
         .box {
@@ -40,7 +37,6 @@
             transition: border-color 0.3s ease;
             position: relative;
             background-color: #fff;
-            /* Ensure boxes also have white background */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -74,13 +70,13 @@
             position: absolute;
             right: 144px;
             font-size: 10px;
-            color: rgb(237 9 75 / 66%);
+            color: white;
             font-weight: bold;
-            background-color: rgb(237, 9, 75, 0.66); /* Background color with transparency */
-    color: white; /* Text color */
-    box-shadow: 0 4px;
-    padding:4px;
-    margin-right: 14px;
+            background-color: rgba(237, 9, 75, 0.66);
+            box-shadow: 0 4px;
+            padding: 4px;
+            margin-right: 14px;
+            display: none;
         }
 
         .box-content {
@@ -129,13 +125,11 @@
             flex-direction: column;
             align-items: center;
             width: 300px;
-            /* Match the width of the boxes */
             padding: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
-            /* Add some space above the container */
         }
 
         .text-container {
@@ -143,7 +137,6 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
-            /* Space between text and button */
         }
 
         .text {
@@ -194,9 +187,7 @@
             content: "";
             flex: 1;
             border-bottom: 1px solid rgb(237 9 75 / 66%);
-            /* Solid line */
             margin: 0 10px;
-            /* Space between the text and the lines */
         }
 
         .line-text {
@@ -204,7 +195,6 @@
             font-size: 20px;
             text-align: center;
             height: 100%;
-            /* Ensure it takes up the full height of the container */
             font-weight: bold;
 
         }
@@ -218,6 +208,7 @@
             position: relative;
             top: 27px;
         }
+
         .droptext2 {
             font-size: 10px;
             position: relative;
@@ -402,20 +393,28 @@
 
             boxes.forEach((box, index) => {
                 box.addEventListener('mouseover', function () {
-                    // Uncheck all other radios and collapse their boxes
-                    boxes.forEach((b, i) => {
-                        if (b !== box) {
-                            b.classList.remove('expanded', 'highlighted');
-                            radios[i].checked = false;
-                        }
-                    });
+                    toggleBox(box, index);
+                });
 
-                    // Highlight the current box and check its radio button
-                    box.classList.add('expanded', 'highlighted');
-                    radios[index].checked = true;
+                radios[index].addEventListener('change', function () {
+                    toggleBox(box, index);
                 });
             });
+
+            function toggleBox(box, index) {
+                boxes.forEach((b, i) => {
+                    if (b !== box) {
+                        b.classList.remove('expanded', 'highlighted');
+                        radios[i].checked = false;
+                        b.querySelector('.discount-text').style.display = 'none';
+                    }
+                });
+                box.classList.add('expanded', 'highlighted');
+                radios[index].checked = true;
+                box.querySelector('.discount-text').style.display = 'block';
+            }
         });
+
     </script>
 
 </body>
